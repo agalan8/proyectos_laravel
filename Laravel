@@ -1,0 +1,115 @@
+
+// Crear la tabla 
+
+1. Crearla haciendo una migración
+
+php artisan make:model -cmrfs Empleado
+
+Si quiero crear una tabla pivote:
+
+php artisan make:migration create_ejemplar_cliente_table
+php artisan make:migration create_notas_table
+
+2. Vamos a la migración en vscode y le metemos mano
+
+En Schema::create añadimos cada columna de la tabla. Ej:
+
+$table -> decimal('numero', 4, 0) -> unique();
+
+Para que una columna dependa de otra tabla o este relacionado:
+
+// Clave ajena
+$table -> foreignId('departamento_id') -> constrained();
+
+con "constrained()" establecemos la relacion entre el campo 'departamento_id' de la tabla 
+departamentos y la tabla empleados.
+
+Al poner departamendo_id Laravel ya sabe que ese valor pertenece a la tabla departamentos.
+
+Creamos un índice para que las consultas sean más rápidas:
+
+$table -> index('departamento_id');
+
+Confirmamos la migración en la terminal:
+
+ php artisan migrate
+
+3. Insertamos las filas a la tabla empleados
+
+*terminal*
+
+insert into empleados(numero, nombre,apellidos, departamento_id)
+values(10, 'Pepe', 'Martinez', 4),....
+
+4. Consultamos el modelo (Empleado).
+
+5. Consultamos el controller (EmpleadoController)
+
+6. En el controller creamos una ruta para el index (En este caso para pintar todos los empleados).
+
+return view('empleados.index', [
+	'empleados => '])
+
+7. Creamos la plantilla blade para la ruta anterior.
+
+8. Crear una relacion entre dos tablas (Empleado -- Departamento).
+
+Vamos al modelo Departamento y creamos el método empleados():
+
+public function empleados(){
+  return $this->hasMany(Empleado::class);
+}
+
+hasMany quiere decir que tenemos muchos (1 departamento tiene muchos empleados).
+
+Ahora vamos al modelo Empleado y creamos el método departamento():
+
+public function departamento(){
+  return $this->belongsTo(Departamento::class);
+}
+
+belongsTo quiere decir que 1 Empleado pertenece solo a 1 Departamento
+
+26 min 1. , 2.
+
+
+-------------------------------------------------------------------------------
+
+$cceeIdFiltro = 1; // Ccee específico que deseas filtrar
+
+$alumno = Alumno::find($alumnoId);
+
+// Obtener las notas del alumno, pero solo del Ccee con el ID especificado
+$notasCcee = $alumno->notas()->where('ccee_id', $cceeIdFiltro)->with('ccee')->get();
+
+foreach ($notasCcee as $nota) {
+    echo "Nota: " . $nota->nota . "\n";
+}
+
+$notasPorCcee = $alumno->notas()->with('ccee')->get()->groupBy('ccee_id');
+
+foreach ($notasPorCcee as $cceeId => $notas) {
+    // Obtener el Ccee relacionado (puedes usar el ID para obtener más detalles si es necesario)
+    $ccee = Ccee::find($cceeId);
+
+    echo "Notas del Ccee: " . $ccee->nombre . " (ID: $cceeId)\n";
+
+    // Recorrer todas las notas de ese Ccee
+    foreach ($notas as $nota) {
+        echo "Nota: " . $nota->nota . "\n";
+    }
+
+    echo "-----------------------------\n";
+}
+
+
+
+
+
+
+
+
+
+
+
+
