@@ -102,6 +102,15 @@ foreach ($notasPorCcee as $cceeId => $notas) {
     echo "-----------------------------\n";
 }
 
+Validaciión de fechas:
+
+'fecha_hora' => [
+		'required', 
+		'date_format:Y-m-d H:i:s',
+		'after_or_equal:2024-12-07 00:00:00',
+		'before_or_equal:2924-12-31 23:59:59',
+		],
+
 
 
 
