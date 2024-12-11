@@ -75,6 +75,8 @@ Crear un projecto nuevo de laravel
   php artisan migrate
   composer run dev
 
+php artisan key:generate
+
 
  
  
