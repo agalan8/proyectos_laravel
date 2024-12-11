@@ -108,7 +108,7 @@ Validaciión de fechas:
 		'required', 
 		'date_format:Y-m-d H:i:s',
 		'after_or_equal:2024-12-07 00:00:00',
-		'before_or_equal:2924-12-31 23:59:59',
+		'before_or_equal:2024-12-31 23:59:59',
 		],
 
 
