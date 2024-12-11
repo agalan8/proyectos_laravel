@@ -8,7 +8,6 @@
             {{ $alumno->nombre }}
         </h2>
     </x-slot>
-
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -22,8 +21,8 @@
                                     </th>
                                 @php
                                 // Devulve una coleccion de colecciones donde cada coleccion son las notas de una asignatura
-                                    $notasEvaluacion = $alumno->notas->groupBy('evaluacion_id')->all()
-                                @endphp
+                                    $notasEvaluacion = $alumno->notas->groupBy('evaluacion_id')->all();
+                                    @endphp
                                     @foreach ($notasEvaluacion as $evaluacionId => $notas)
                                     @php
                                         $evaluacion = Evaluacion::find($evaluacionId);
