@@ -5,14 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ficha extends Model
+class Comentario extends Model
 {
-    /** @use HasFactory<\Database\Factories\FichaFactory> */
+    /** @use HasFactory<\Database\Factories\ComentarioFactory> */
     use HasFactory;
 
-    protected $fillable = ['titulo', 'descripcion'];
+    protected $fillable = ['texto', 'user_id'];
 
-    public function fichable(){
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function comentable(){
         return $this->morphTo();
     }
 

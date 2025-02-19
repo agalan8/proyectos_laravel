@@ -63,7 +63,9 @@ class PeliculaController extends Controller
      */
     public function show(Pelicula $pelicula)
     {
-        return view('peliculas.show');
+        return view('peliculas.show', [
+            'pelicula' => $pelicula,
+        ]);
     }
 
     /**
