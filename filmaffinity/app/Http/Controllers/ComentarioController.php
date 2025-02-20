@@ -30,27 +30,9 @@ class ComentarioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Pelicula $pelicula)
+    public function store(Request $request)
     {
-        $validated = $request->validate([
-            'texto' => 'nullable|string|max:255',
-        ]);
 
-        $user_id = Auth::user()->id;
-
-        $comentario = new Comentario([
-            'texto' => $validated['texto'],
-            'user_id' => $user_id
-        ]);
-        dd($pelicula);
-        $ficha_id = $pelicula->ficha->id;
-        $ficha = Ficha::findOrFail($ficha_id);
-        $comentario->comentable()->associate($ficha);
-        $comentario->save();
-        session()->flash('exito', 'Comentario creado correctamente.');
-        return redirect()->route('peliculas.show', [
-            'pelicula' => $pelicula,
-        ]);
     }
 
     /**
