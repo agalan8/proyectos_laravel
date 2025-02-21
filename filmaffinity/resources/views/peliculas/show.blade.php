@@ -73,7 +73,7 @@
     </div>
 
     <div class="p-10 mt-6 text-center">
-        <form method="POST" action="{{ route('comentario.crear', $pelicula) }}" class="max-w-sm mx-auto">
+        <form method="POST" action="{{ route('comentario.crear', $pelicula->ficha) }}" class="max-w-sm mx-auto">
             @csrf
             <div class="mb-5">
                 <textarea id="texto" name="texto" rows="4"

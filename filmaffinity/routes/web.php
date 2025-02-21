@@ -5,6 +5,7 @@ use App\Http\Controllers\FichaController;
 use App\Http\Controllers\PeliculaController;
 use App\Http\Controllers\VideojuegoController;
 use App\Models\Comentario;
+use App\Models\Ficha;
 use App\Models\Pelicula;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,8 @@ Route::resource('peliculas', PeliculaController::class);
 Route::resource('videojuegos', VideojuegoController::class);
 Route::resource('comentarios', ComentarioController::class);
 
-Route::post('/comentario/crear/{pelicula}', function (Request $request, Pelicula $pelicula) {
+Route::post('/comentario/crear/{ficha}', function (Request $request, Ficha $ficha) {
+
     $validated = $request->validate([
         'texto' => 'nullable|string|max:255',
     ]);
@@ -40,11 +42,14 @@ Route::post('/comentario/crear/{pelicula}', function (Request $request, Pelicula
         'texto' => $validated['texto'],
         'user_id' => $user_id
     ]);
-    $ficha = $pelicula->ficha;
+
     $comentario->comentable()->associate($ficha);
     $comentario->save();
     DB::commit();
-    return redirect()->route('peliculas.show', [
-        'pelicula' => $pelicula,
-    ]);
+    if($ficha->fichable::class == "App/Models/Pelicula"){
+
+        return redirect()->route('peliculas.show', [
+            'pelicula' => $ficha->fichable,
+        ]);
+    }
 })->name('comentario.crear');
