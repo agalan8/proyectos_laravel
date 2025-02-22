@@ -46,10 +46,12 @@ Route::post('/comentario/crear/{ficha}', function (Request $request, Ficha $fich
     $comentario->comentable()->associate($ficha);
     $comentario->save();
     DB::commit();
-    if($ficha->fichable::class == "App/Models/Pelicula"){
+    if($ficha->fichable::class == "App\Models\Pelicula"){
 
         return redirect()->route('peliculas.show', [
             'pelicula' => $ficha->fichable,
         ]);
+
+        // return back();
     }
 })->name('comentario.crear');
