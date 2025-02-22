@@ -65,6 +65,10 @@ Crear un projecto nuevo de laravel
   npm install -D tailwindcss postcss autoprefixer flowbite
 
   Configura flowbite para que se vea en tailwind.config.js añadir: 
+  		content: [
+  		...
+  		'./resources/**/*.{html,js,php}',
+  		],
                 plugins: [
                     forms,
                     require('flowbite/plugin')
