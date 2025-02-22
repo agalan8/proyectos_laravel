@@ -68,6 +68,9 @@
                                                     Eliminar
                                                 </a>
                                             </form>
+                                            @if ($vuelo->plazasLibres())
+                                                <a href="{{ route('vuelos.reserva', $vuelo) }}" class="ml-3 font-medium text-blue-600 dark:text-blue-500 hover:underline">Reservar</a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

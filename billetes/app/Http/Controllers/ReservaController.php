@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reserva;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReservaController extends Controller
 {
@@ -12,7 +13,9 @@ class ReservaController extends Controller
      */
     public function index()
     {
-        //
+        return view('reservas.index', [
+            'reservas' => Reserva::where('user_id', Auth::user()->id)->with('asiento','user')->get(),
+        ]);
     }
 
     /**
@@ -28,7 +31,15 @@ class ReservaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $asiento_id = $request->input('asiento_id');
+
+        Reserva::create([
+            'user_id' => Auth::user()->id,
+            'asiento_id' => $asiento_id,
+        ]);
+
+        return redirect()->route('reservas.index');
     }
 
     /**
