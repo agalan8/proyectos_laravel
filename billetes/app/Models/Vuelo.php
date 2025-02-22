@@ -15,4 +15,16 @@ class Vuelo extends Model
     public function asientos(){
         return $this->hasMany(Asiento::class);
     }
+
+    public function generarAsientos(){
+
+        for($i = 1; $i <= $this->plazas_totales; $i++){
+
+            Asiento::create([
+                'vuelo_id' => $this->id,
+                'numero' => $i,
+            ]);
+
+        }
+    }
 }
