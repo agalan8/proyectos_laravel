@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('asientos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('numero')->unique();
+            $table->integer('numero');
             $table->foreignId('vuelo_id')->constrained();
             $table->unique(['vuelo_id', 'numero']);
         });

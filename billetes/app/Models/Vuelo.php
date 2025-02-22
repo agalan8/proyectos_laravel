@@ -30,15 +30,14 @@ class Vuelo extends Model
 
     public function plazasLibres(){
 
-        $libre = false;
-
-        foreach($this->asientos as $asiento){
-            if($asiento->reserva){
-                $libre = false;
-            } else{
-                $libre = true;
-            }
+        if(Asiento::where('vuelo_id', $this->id)->doesntHave('reserva')->get()->count() != 0){
+            return true;
         }
-        return $libre;
+
+        return false;
+    }
+
+    public function quedanLibres(){
+        return Asiento::where('vuelo_id', $this->id)->doesntHave('reserva')->get()->count();
     }
 }
