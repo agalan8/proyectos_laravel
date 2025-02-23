@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('nombre');
-            $table->string('imagen', 4000);
+            $table->string('imagen', 4000)->nullable();
+            $table->softDeletes();
         });
     }
 
@@ -23,7 +24,9 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {
-        Schema::dropIfExists('artistas');
-    }
+{
+    Schema::table('artistas', function (Blueprint $table) {
+        $table->dropSoftDeletes();
+    });
+}
 };

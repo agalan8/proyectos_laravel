@@ -16,7 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('nombre');
             $table->string('imagen', 4000)->nullable();
-            $table->time('duracion');
+            $table->string('duracion');
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +26,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('canciones');
+        Schema::table('canciones', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };

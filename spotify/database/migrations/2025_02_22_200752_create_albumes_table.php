@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('nombre');
             $table->string('imagen', 4000)->nullable();
+            $table->softDeletes();
         });
     }
 
@@ -24,6 +25,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('albumes');
+        Schema::table('albumes', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };

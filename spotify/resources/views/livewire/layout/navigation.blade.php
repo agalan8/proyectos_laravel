@@ -34,6 +34,25 @@ new class extends Component
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                {{-- @can('viewAny', App\Models\Artista::class) --}}
+                @can('soloAdmin')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('artistas.index')" :active="request()->routeIs('artistas.index')" wire:navigate>
+                        {{ __('Artistas') }}
+                    </x-nav-link>
+                </div>
+                @endcan
+                {{-- @endcan --}}
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('canciones.index')" :active="request()->routeIs('canciones.index')" wire:navigate>
+                        {{ __('Canciones') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('albumes.index')" :active="request()->routeIs('albumes.index')" wire:navigate>
+                        {{ __('Álbumes') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

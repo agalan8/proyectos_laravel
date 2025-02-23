@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('artista_id')->constrained();
             $table->foreignId('cancion_id')->constrained('canciones');
+            $table->primary(['artista_id', 'cancion_id']);
         });
     }
 

@@ -72,6 +72,13 @@ belongsTo quiere decir que 1 Empleado pertenece solo a 1 Departamento
 
 26 min 1. , 2.
 
+----------------------------------------------------
+IMAGENES
+
+añadir en la etiqueta de apertura del formulario enctype="multipart/form-data"
+
+en el archivo env, modificar FILESYSTEM_DISK=local por FILESYSTEM_DISK=public
+
 
 -------------------------------------------------------------------------------
 
