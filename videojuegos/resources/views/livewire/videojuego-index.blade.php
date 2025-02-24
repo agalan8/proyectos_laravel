@@ -31,11 +31,20 @@
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sortBy('codigo')">
+                    <th scope="col" class="px-6 py-3 cursor-pointer">
                         Título
                     </th>
-                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sortBy('aeropuerto_origen')">
+                    <th scope="col" class="px-6 py-3 cursor-pointer">
                         Año
+                    </th>
+                    <th scope="col" class="px-6 py-3 cursor-pointer">
+                        Desarrolladora
+                    </th>
+                    <th scope="col" class="px-6 py-3 cursor-pointer">
+                        Distribuidora
+                    </th>
+                    <th scope="col" colspan="2" class=" px-6 py-3 cursor-pointer">
+                        Opciones
                     </th>
                 </tr>
             </thead>
@@ -44,6 +53,10 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="px-6 py-4">{{ $videojuego->titulo }}</td>
                         <td class="px-6 py-4">{{ $videojuego->anyo }}</td>
+                        <td class="px-6 py-4">{{ $videojuego->desarrolladora->nombre }}</td>
+                        <td class="px-6 py-4">{{ $videojuego->desarrolladora->distribuidora->nombre }}</td>
+                        <td><a href="#" wire:confirm="¿Seguro?" wire:click="eliminar({{ $videojuego->id }})">Eliminar</a></td>
+                        <td><a href="#" wire:click="editar({{ $videojuego->id }})" @click="open = ! open">Editar</a></td>
                     </tr>
                 @endforeach
             </tbody>

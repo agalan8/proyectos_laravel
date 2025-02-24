@@ -15,4 +15,4 @@ Route::view('profile', 'profile')
 
 require __DIR__.'/auth.php';
 
-Route::get('/videojuegos', VideojuegoIndex::class)->name('videojuegos');
+Route::get('/videojuegos', VideojuegoIndex::class)->middleware(['auth'])->name('videojuegos');

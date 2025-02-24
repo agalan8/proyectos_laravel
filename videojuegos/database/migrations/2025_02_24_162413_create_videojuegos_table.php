@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('anyo');
             $table->foreignId('desarrolladora_id')->constrained();
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +26,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('videojuegos');
+        Schema::table('videojuegos', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };
