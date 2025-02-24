@@ -13,7 +13,9 @@ class AsignaturaController extends Controller
      */
     public function index()
     {
-        //
+        return view('asignaturas.index', [
+            'asignaturas' => Asignatura::with('notas')->get(),
+        ]);
     }
 
     /**
@@ -21,7 +23,7 @@ class AsignaturaController extends Controller
      */
     public function create()
     {
-        //
+        return view('asignaturas.create');
     }
 
     /**
@@ -29,7 +31,9 @@ class AsignaturaController extends Controller
      */
     public function store(StoreAsignaturaRequest $request)
     {
-        //
+        $asignatura = Asignatura::create($request->input());
+        session()->flash('exito', 'Asignatura creado correctamente.');
+        return redirect()->route('asignaturas.show', $asignatura);
     }
 
     /**
@@ -37,7 +41,9 @@ class AsignaturaController extends Controller
      */
     public function show(Asignatura $asignatura)
     {
-        //
+        return view('asignaturas.show', [
+            'asignatura' => $asignatura,
+        ]);
     }
 
     /**
@@ -45,7 +51,9 @@ class AsignaturaController extends Controller
      */
     public function edit(Asignatura $asignatura)
     {
-        //
+        return view('asignaturas.edit', [
+            'asignatura' => $asignatura,
+        ]);
     }
 
     /**
@@ -53,7 +61,10 @@ class AsignaturaController extends Controller
      */
     public function update(UpdateAsignaturaRequest $request, Asignatura $asignatura)
     {
-        //
+        $asignatura->fill($request->all());
+        $asignatura->save();
+        session()->flash('exito', 'Asignatura modificada correctamente.');
+        return redirect()->route('asignaturas.index');
     }
 
     /**
@@ -61,6 +72,7 @@ class AsignaturaController extends Controller
      */
     public function destroy(Asignatura $asignatura)
     {
-        //
+        $asignatura->delete();
+        return redirect()->route('asignaturas.index');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateAsignaturaRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateAsignaturaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return !Auth::guest();
     }
 
     /**
@@ -22,7 +23,8 @@ class UpdateAsignaturaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'denominacion' => 'required|string',
+            'numero_de_trimestres' => 'required',
         ];
     }
 }

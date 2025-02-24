@@ -13,7 +13,9 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        //
+        return view('alumnos.index', [
+            'alumnos' => Alumno::with('notas')->get(),
+        ]);
     }
 
     /**
@@ -21,7 +23,7 @@ class AlumnoController extends Controller
      */
     public function create()
     {
-        //
+        return view('alumnos.create');
     }
 
     /**
@@ -29,7 +31,9 @@ class AlumnoController extends Controller
      */
     public function store(StoreAlumnoRequest $request)
     {
-        //
+        $alumno = Alumno::create($request->all());
+        session()->flash('exito', 'Alumno creado correctamente.');
+        return redirect()->route('alumnos.show', $alumno);
     }
 
     /**
@@ -37,7 +41,9 @@ class AlumnoController extends Controller
      */
     public function show(Alumno $alumno)
     {
-        //
+        return view('alumnos.show', [
+            'alumno' => $alumno,
+        ]);
     }
 
     /**
@@ -45,7 +51,9 @@ class AlumnoController extends Controller
      */
     public function edit(Alumno $alumno)
     {
-        //
+        return view('alumnos.edit', [
+            'alumno' => $alumno,
+        ]);
     }
 
     /**
@@ -53,7 +61,11 @@ class AlumnoController extends Controller
      */
     public function update(UpdateAlumnoRequest $request, Alumno $alumno)
     {
-        //
+
+        $alumno->fill($request->all());
+        $alumno->save();
+        session()->flash('exito', 'Alumno modificado correctamente.');
+        return redirect()->route('alumnos.index');
     }
 
     /**
@@ -61,6 +73,7 @@ class AlumnoController extends Controller
      */
     public function destroy(Alumno $alumno)
     {
-        //
+        $alumno->delete();
+        return redirect()->route('alumnos.index');
     }
 }

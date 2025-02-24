@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreAsignaturaRequest extends FormRequest
+class StoreNotaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,8 @@ class StoreAsignaturaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'denominacion' => 'required|string',
-            'numero_de_trimestres' => 'required',
+            'trimestre' => 'required|string|',
+            'nota' => 'required|integer|min:0|max:10'
         ];
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('alumno_id')->constrained();
             $table->foreignId('asignatura_id')->constrained();
-            $table->integer('trimestre');
+            $table->string('trimestre');
             $table->integer('nota');
         });
     }

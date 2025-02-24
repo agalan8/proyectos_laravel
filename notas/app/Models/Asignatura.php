@@ -10,7 +10,9 @@ class Asignatura extends Model
     /** @use HasFactory<\Database\Factories\AsignaturaFactory> */
     use HasFactory;
 
-    public function alumnos(){
-        return $this->belongsToMany(Alumno::class, 'notas')->withPivot('trimestre','notas');
+    protected $fillable = ['denominacion', 'numero_de_trimestres'];
+
+    public function notas(){
+        return $this->hasMany(Nota::class);
     }
 }

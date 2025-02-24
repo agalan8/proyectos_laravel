@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('denominacion');
-            $table->integer('numero_de_trimestres');
+            $table->string('numero_de_trimestres');
         });
     }
 

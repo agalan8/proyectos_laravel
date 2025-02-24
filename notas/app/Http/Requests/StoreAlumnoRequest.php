@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreAlumnoRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreAlumnoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return !Auth::guest();
     }
 
     /**
@@ -22,7 +23,7 @@ class StoreAlumnoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nombre' => 'required|string',
         ];
     }
 }
