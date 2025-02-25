@@ -22,6 +22,9 @@
                                     <th scope="col" class="px-6 py-3">
                                         Aula
                                     </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Número de dispositivos
+                                    </th>
                                     <th colspan="2" scope="col" class="px-6 py-3">
                                         Acciones
                                     </th>
@@ -40,6 +43,9 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $ordenador->aula->nombre }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $ordenador->numDispositivos() }}
                                         </td>
                                         <td class="px-6 py-4 flex items-center">
                                             <a href="{{ route('ordenadores.edit', $ordenador) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>

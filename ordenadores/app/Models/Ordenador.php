@@ -24,4 +24,8 @@ class Ordenador extends Model
     public function cambios(){
         return $this->hasMany(Cambio::class);
     }
+
+    public function numDispositivos(){
+        return $this->dispositivos()->count();
+    }
 }
