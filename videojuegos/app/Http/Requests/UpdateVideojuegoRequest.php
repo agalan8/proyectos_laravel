@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateVideojuegoRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateVideojuegoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,16 @@ class UpdateVideojuegoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'titulo' => 'required|string',
+            'anyo' => 'required|numeric|min:1900|max:2025',
+            'desarrolladora_id' => 'required|exists:desarrolladoras,id'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'titulo.required' => 'El título es obligatorio.',
         ];
     }
 }

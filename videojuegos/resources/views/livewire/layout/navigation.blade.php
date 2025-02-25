@@ -40,6 +40,11 @@ new class extends Component
                         {{ __('Videojuegos') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('videojuegos-poseo')" :active="request()->routeIs('videojuegos-poseo')" wire:navigate>
+                        {{ __('Poseo') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
