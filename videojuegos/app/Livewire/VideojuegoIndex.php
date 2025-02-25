@@ -67,6 +67,7 @@ class VideojuegoIndex extends Component
     public function eliminar($videojuegoId)
     {
         $videojuego = Videojuego::findOrFail($videojuegoId);
+        $videojuego->users()->detach();
         $videojuego->delete();
     }
 
