@@ -20,7 +20,11 @@ class Aula extends Model
         return $this->morphMany(Dispositivo::class, 'colocable');
     }
 
-    public function cambios(){
-        return $this->hasMany(Cambio::class);
+    public function cambiosOrigen(){
+        return $this->hasMany(Cambio::class, 'origen_id');
+    }
+
+    public function cambiosDestino(){
+        return $this->hasMany(Cambio::class, 'destino_id');
     }
 }

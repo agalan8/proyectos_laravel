@@ -40,35 +40,13 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Cambios
             </h2>
-
-        <div class="relative overflow-x-auto mt-10">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            Aula origen
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Aula destino
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($ordenador->cambios as $cambio)
-
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $cambio->origen_id }}
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ $cambio->destino_id }}
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
+            <div class="py-6">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    @livewire('historial-eliminar', [
+                        'ordenadorId' => $ordenador->id
+                    ])
+                </div>
+            </div>
         </div>
     </div>
 </x-app-layout>
