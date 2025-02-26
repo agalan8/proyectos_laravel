@@ -7,14 +7,27 @@ use App\Http\Requests\UpdateOrdenadorRequest;
 use App\Models\Aula;
 use App\Models\Cambio;
 use App\Models\Ordenador;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Gate;
 
 class OrdenadorController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        // $this->authorize('viewAny', Ordenador::class);
+
+        // if(!Gate::allows('soloAdmin')){
+        //     // abort(403, 'Solo admin manin');
+        //     return redirect()->route('dashboard');
+        // }
+
+        // Gate::authorize('soloAdmin');
+
+
         return view('ordenadores.index', [
             'ordenadores' => Ordenador::with('aula', 'cambios', 'dispositivos')->get(),
         ]);

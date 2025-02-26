@@ -34,11 +34,15 @@ new class extends Component
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                {{-- @can('viewAny', App\Models\Ordenador::class) --}}
+                @can('soloAdmin')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('ordenadores.index')" :active="request()->routeIs('ordenadores.index')" wire:navigate>
                         {{ __('Ordenadores') }}
                     </x-nav-link>
                 </div>
+                @endcan
+                {{-- @endcan --}}
             </div>
 
             <!-- Settings Dropdown -->

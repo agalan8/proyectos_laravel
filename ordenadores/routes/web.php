@@ -17,4 +17,6 @@ require __DIR__.'/auth.php';
 
 Route::resource('ordenadores', OrdenadorController::class)->parameters([
     'ordenadores' => 'ordenador',
-]);
+])->middleware('can:soloAdmin');
+
+// ->middleware('can:viewAny, App\Models\Ordenador::class');

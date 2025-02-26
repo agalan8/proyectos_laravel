@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Ordenador;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class OrdenadorPolicy
 {
@@ -13,7 +14,7 @@ class OrdenadorPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->name === 'admin';
     }
 
     /**
