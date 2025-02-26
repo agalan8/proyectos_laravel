@@ -79,6 +79,10 @@ añadir en la etiqueta de apertura del formulario enctype="multipart/form-data"
 
 en el archivo env, modificar FILESYSTEM_DISK=local por FILESYSTEM_DISK=public
 
+crear carpeta en storage/app/public
+
+php artisan storage:link
+
 
 -------------------------------------------------------------------------------
 
@@ -117,6 +121,44 @@ Validaciión de fechas:
 		'after_or_equal:2024-12-07 00:00:00',
 		'before_or_equal:2024-12-31 23:59:59',
 		],
+	
+-------------------------------------------------------------
+
+EMAIL
+
+Pagina mailtrap->email testing->my inbox->php->laravel
+
+MAIL_SCHEME=null
+MAIL_FROM_ADDRESS="alejandro@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=b82c6cdba6bfb1
+MAIL_PASSWORD=929e75e79f1531
+
+php artisan make:mail mail
+
+app->mail
+
+    public function content(): Content
+    {
+        return new Content(
+            markdown: 'emails.ejemploMarkdown',
+            text: 'emails.ejemploText'
+        );
+    }
+    
+    views->carpeta emails->plantilla blade
+    
+    web.php
+    
+    Route::get('/correo', function(){
+    Mail::to('alejandro@inbox.mailtrap.io')->send(new enviarCorreo);
+    return redirect()->route('eventos.index');
+});
+
+
 
 
 
