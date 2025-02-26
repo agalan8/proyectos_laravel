@@ -3,8 +3,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <input type="date" wire:model.live="fecha_inicio" placeholder="Buscar..." class="mb-4 px-4 py-2 border border-gray-300 rounded-lg">
-                    <input type="date" wire:model.live="fecha_fin" placeholder="Buscar..." class="mb-4 px-4 py-2 border border-gray-300 rounded-lg">
+                    <input type="date" wire:model.live="fechaInicio" placeholder="Buscar..." class="mb-4 px-4 py-2 border border-gray-300 rounded-lg">
+                    <input type="date" wire:model.live="fechaFin" placeholder="Buscar..." class="mb-4 px-4 py-2 border border-gray-300 rounded-lg">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
