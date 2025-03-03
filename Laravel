@@ -1,4 +1,16 @@
 --------------------------------------------------------------------------------------
+REGISTRAR Y LOGIN CON DNI
+--------------------------------------------------------------------------------------
+Modificar archivos:
+
+- LoginForm.php
+- login.blade.php
+- register.blade.php
+- User.php
+- Crear migración para añadir la columna:
+php artisan migrate add_users_dni_column --table=users
+
+--------------------------------------------------------------------------------------
 SEEDERS Y FACTORIES
 --------------------------------------------------------------------------------------
 -----------
