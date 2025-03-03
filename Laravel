@@ -427,6 +427,43 @@ Validaciión de fechas:
 		'after_or_equal:2024-12-07 00:00:00',
 		'before_or_equal:2024-12-31 23:59:59',
 		],
+	
+---------------------------------------------------------------------
+
+INSERT INTO usuarios (nombre, fecha_creacion) 
+VALUES ('Juan', NOW());
+
+-- Insertar un evento con la fecha actual más 7 días
+INSERT INTO eventos (nombre, fecha_evento) 
+VALUES ('Reunión de equipo', NOW() + INTERVAL '7 days');
+
+-- Insertar un evento con la fecha actual más 3 meses
+INSERT INTO eventos (nombre, fecha_evento) 
+VALUES ('Lanzamiento de producto', NOW() + INTERVAL '3 months');
+
+-- Insertar un evento con la fecha actual más 2 años
+INSERT INTO eventos (nombre, fecha_evento) 
+VALUES ('Aniversario de la empresa', NOW() + INTERVAL '2 years');
+
+--------------------------------------------------------------------
+
+test('el usuario crea un aula correctamente', function () {
+    $usuario = User::factory()->create();
+
+    // Simula la autenticación del usuario
+    $this->actingAs($usuario);
+
+    // Crear el aula usando Livewire
+    Livewire::test(CrearAula::class)
+        ->set('nombre', 'p123') // Establece el valor del nombre
+        ->call('crear'); // Llama al método 'crear'
+    // Verifica que el aula fue creada correctamente en la base de datos
+    $this->assertDatabaseHas('aulas', [
+        'nombre' => 'p123',
+    ]);
+}); esto es test con livewire por si acaso
+
+
 
 
 
