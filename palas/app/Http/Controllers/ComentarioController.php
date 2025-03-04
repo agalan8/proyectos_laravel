@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreComentarioRequest;
 use App\Http\Requests\UpdateComentarioRequest;
 use App\Models\Comentario;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ComentarioController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -61,6 +63,11 @@ class ComentarioController extends Controller
      */
     public function destroy(Comentario $comentario)
     {
-        //
+        $this->authorize('delete', $comentario);
+
+        $comentario->comentarios()->delete();
+        $comentario->delete();
+
+        return back();
     }
 }

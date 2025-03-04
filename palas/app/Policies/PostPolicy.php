@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class PostPolicy
 {
@@ -29,7 +30,7 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return !Auth::guest();
     }
 
     /**
@@ -37,7 +38,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        return false;
+        return $user->id == $post->user->id;
     }
 
     /**
@@ -45,7 +46,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        return false;
+        return $user->id == $post->user->id;
     }
 
     /**

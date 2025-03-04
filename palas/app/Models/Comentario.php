@@ -19,4 +19,8 @@ class Comentario extends Model
     public function comentarios(){
         return $this->morphMany(Comentario::class, 'comentable');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
