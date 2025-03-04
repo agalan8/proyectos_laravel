@@ -25,6 +25,11 @@
                             </dd>
                         </div>
                     </dl>
+
+                    {{-- @livewire('ComentariosPost', [
+                        'post_id' => $post->id
+                    ]) --}}
+
                     <div class="py-12 flex justify-center">
                         <div class="max-w-4xl w-full">
 
@@ -45,8 +50,6 @@
                                     <x-comentario :comentario="$comentario" />
                                 @endforeach
                             </div>
-
-                            <!-- Formulario para añadir comentarios -->
                         </div>
                     </div>
                 </div>

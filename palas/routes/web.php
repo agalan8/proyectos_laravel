@@ -3,6 +3,7 @@
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReservaController;
+use App\Livewire\CompraCarrito;
 use App\Livewire\ReservasIndex;
 use App\Models\Comentario;
 use App\Models\Pista;
@@ -59,4 +60,12 @@ Route::post('/comentar/comentario/{comentario}', function(Comentario $comentario
 
 })->name('comentarComentario')->middleware('auth');
 
-Route::get('reservas', ReservasIndex::class)->name('reservasIndex');
+Route::get('/reservas', ReservasIndex::class)->name('reservasIndex');
+
+Route::get('/cajaAmiga', function (){
+
+    return view('cajaAmiga');
+
+})->name('cajaAmiga');
+
+Route::get('/compra/carrito', CompraCarrito::class)->name('compraCarrito');

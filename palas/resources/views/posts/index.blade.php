@@ -11,25 +11,25 @@
                 @foreach ($posts as $post)
                 <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800">
                         <a href="{{ route('posts.show', $post) }}">
-                        <img class="w-full h-56 object-cover" src="{{ $post->imagen }}">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl text-gray-900 dark:text-white mb-2">{{ $post->titulo }}</div>
-                        </div>
-                        @can('update', $post)
-                            <a href="{{ route('posts.edit', $post) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
-                        @endcan
-                        @can('delete', $post)
-                        <form method="POST" action="{{ route('posts.destroy', $post) }}">
-                            @method('DELETE')
-                            @csrf
-                            <a href="{{ route('posts.destroy', $post) }}"
-                                class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
-                                onclick="event.preventDefault(); if (confirm('¿Está seguro?')) this.closest('form').submit();">
-                                Eliminar
-                            </a>
-                        </form>
+                            <img class="w-full h-56 object-cover" src="{{ $post->imagen }}">
+                            <div class="px-6 py-4">
+                                <div class="font-bold text-xl text-gray-900 dark:text-white mb-2">{{ $post->titulo }}</div>
+                            </div>
+                            @can('update', $post)
+                                <a href="{{ route('posts.edit', $post) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                            @endcan
+                            @can('delete', $post)
+                            <form method="POST" action="{{ route('posts.destroy', $post) }}">
+                                @method('DELETE')
+                                @csrf
+                                <a href="{{ route('posts.destroy', $post) }}"
+                                    class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
+                                    onclick="event.preventDefault(); if (confirm('¿Está seguro?')) this.closest('form').submit();">
+                                    Eliminar
+                                </a>
+                            </form>
 
-                        @endcan
+                            @endcan
                         </a>
                 </div>
                 @endforeach
