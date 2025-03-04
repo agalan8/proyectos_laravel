@@ -2,8 +2,13 @@
 
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReservaController;
+use App\Livewire\ReservasIndex;
 use App\Models\Comentario;
+use App\Models\Pista;
 use App\Models\Post;
+use App\Models\Reserva;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +27,7 @@ require __DIR__.'/auth.php';
 
 Route::resource('posts', PostController::class);
 Route::resource('comentarios', ComentarioController::class);
+// Route::resource('reservas', ReservaController::class);
 
 Route::post('/comentar/post/{post}', function(Post $post, Request $request){
 
@@ -52,3 +58,5 @@ Route::post('/comentar/comentario/{comentario}', function(Comentario $comentario
     return back();
 
 })->name('comentarComentario')->middleware('auth');
+
+Route::get('reservas', ReservasIndex::class)->name('reservasIndex');
