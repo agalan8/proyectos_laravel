@@ -11,21 +11,35 @@ class CompraCarrito extends Component
 {
 
     public $codigo = null;
-
-    public $productos = [];
-
+    public $lineas = [];
     public $total = 0;
-
-    public $comprando = true;
-
     public $tarjeta = null;
+    public $comprando = true;
+    public $compraTerminada = false;
+
+
+    public function mount(){
+        $this->lineas = session()->get('lineas', []);  // Cargar las líneas del carrito
+        $this->total = session()->get('total', 0);
+    }
+
+    public function guardarEnSesion()
+    {
+        session()->put('lineas', $this->lineas);
+        session()->put('total', $this->total);
+    }
 
     public function render()
     {
 
+        $productos = Producto::whereIn('id', array_keys($this->lineas))->get();
+
+        $this->guardarEnSesion();
+
         return view('livewire.compra-carrito', [
 
-            'productos' => $this->productos,
+            'productos' => $productos,
+            'lineas' => $this->lineas,
             'total' => $this->total,
             'comprando' => $this->comprando,
 
@@ -33,34 +47,57 @@ class CompraCarrito extends Component
         ->layout('layouts.app');
     }
 
-    public function anyadirProducto(){
+    public function anyadirProducto($producto_id = null){
 
-        $producto = Producto::where('codigo', $this->codigo)->first();
+        if($producto_id == null){
 
-        $this->productos[] = $producto;
+            $producto = Producto::where('codigo', $this->codigo)->first();
+        } else{
+            $producto = Producto::find($producto_id);
+        }
+
+
+        if($producto){
+
+            if (isset($this->lineas[$producto->id])) {
+                // Si está, sumamos 1 a la cantidad
+                $this->lineas[$producto->id] += 1;
+            } else {
+                // Si no está, lo añadimos con cantidad 1
+                $this->lineas[$producto->id] = 1;
+            }
+
+        }
 
         $this->total += $producto->precio;
 
+        $this->guardarEnSesion();
     }
 
     public function eliminarProducto($producto_id){
 
-        foreach ($this->productos as $index => $producto) {
-            if ($producto->id == $producto_id) {
-                unset($this->productos[$index]);
-                break;
+        if (isset($this->lineas[$producto_id])) {
+            // Si la cantidad es 1, eliminamos el producto del array
+            if ($this->lineas[$producto_id] == 1) {
+                unset($this->lineas[$producto_id]);
+            }
+            // Si la cantidad es mayor que 1, restamos 1
+            elseif ($this->lineas[$producto_id] > 1) {
+                $this->lineas[$producto_id] -= 1;
             }
         }
 
-        $this->productos = array_values($this->productos);
+        $this->total -= Producto::find($producto_id)->precio;
 
+        $this->guardarEnSesion();
     }
 
-    public function anularCompra(){
+    public function reiniciarCompra(){
 
-        $this->productos = [];
+        $this->lineas = [];
 
-        $this->productos = array_values($this->productos);
+        session()->forget('lineas');
+        session()->forget('total');
 
         return redirect()->route('cajaAmiga');
 
@@ -73,5 +110,33 @@ class CompraCarrito extends Component
 
     public function comprar(){
 
+
+        $validated = $this->validate([
+            'tarjeta' => 'required|string|size:16',
+        ]);
+
+        $ticket = Ticket::create($validated);
+
+        if ($ticket) {
+            foreach ($this->lineas as $producto_id => $cantidad) {
+                $producto = Producto::find($producto_id); // Obtener el producto por ID
+
+                if ($producto) {
+                    // Crear la línea asociada al ticket y producto
+                    Linea::create([
+                        'ticket_id' => $ticket->id,
+                        'producto_id' => $producto->id,
+                        'cantidad' => $cantidad,
+                    ]);
+                }
+            }
+        }
+
+        $this->lineas = [];
+        $this->total = 0;
+        session()->forget('lineas');
+        session()->forget('total');
+
+        $this->compraTerminada = true;
     }
 }

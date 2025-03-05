@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lineas', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('ticket_id')->constrained();
-            $table->foreignId('producto_id')->constrained();
-            $table->unique(['producto_id', 'ticket_id']);
-            $table->timestamps();
+        Schema::table('lineas', function (Blueprint $table) {
+            $table->integer('cantidad');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lineas');
+        Schema::table('lineas', function (Blueprint $table) {
+            //
+        });
     }
 };

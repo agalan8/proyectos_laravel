@@ -3,6 +3,7 @@
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\TicketController;
 use App\Livewire\CompraCarrito;
 use App\Livewire\ReservasIndex;
 use App\Models\Comentario;
@@ -28,6 +29,7 @@ require __DIR__.'/auth.php';
 
 Route::resource('posts', PostController::class);
 Route::resource('comentarios', ComentarioController::class);
+Route::resource('tickets', TicketController::class);
 // Route::resource('reservas', ReservaController::class);
 
 Route::post('/comentar/post/{post}', function(Post $post, Request $request){

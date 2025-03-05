@@ -10,7 +10,7 @@ class Linea extends Model
     /** @use HasFactory<\Database\Factories\LineaFactory> */
     use HasFactory;
 
-    protected $fillable = ['ticket_id', 'producto_id'];
+    protected $fillable = ['ticket_id', 'producto_id', 'cantidad'];
 
     public function ticket(){
         return $this->belongsTo(Ticket::class);

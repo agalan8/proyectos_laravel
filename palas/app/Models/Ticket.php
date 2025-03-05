@@ -15,4 +15,20 @@ class Ticket extends Model
     public function lineas(){
         return $this->hasMany(Linea::class);
     }
+
+    public function getTotal(){
+
+        $total = 0;
+
+        foreach($this->lineas as $linea){
+
+            $precio = $linea->producto->precio;
+
+            $precio = $precio * $linea->cantidad;
+
+            $total += $precio;
+        }
+
+        return $total;
+    }
 }
