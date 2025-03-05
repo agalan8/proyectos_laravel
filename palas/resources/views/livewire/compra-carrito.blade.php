@@ -21,6 +21,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @dump($lineas);
                                     @foreach ($productos as $producto)
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td class="py-4 px-6">{{ $producto->denominacion }}</td>

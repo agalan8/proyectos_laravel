@@ -30,8 +30,7 @@
             <select wire:model="desarrolladora_id" id="desarrolladora_id" name="desarrolladora_id">
                 <option value="" disabled selected>Selecciona una desarrolladora...</option>
                 @foreach ($desarrolladoras as $desarrolladora)
-                    <option value="{{ $desarrolladora->id }}" {{ $estaEditando ? ($desarrolladora->id == $videojuego->desarrolladora->id ? 'selected' : '') : ''
- }}x>{{ $desarrolladora->nombre }}</option>
+                    <option value="{{ $desarrolladora->id }}" {{ $estaEditando ? ($desarrolladora->id == $videojuego->desarrolladora->id ? 'selected' : '') : ''}}x>{{ $desarrolladora->nombre }}</option>
                 @endforeach
             </select>
         </div>
