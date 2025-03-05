@@ -1,0 +1,160 @@
+----------
+- academia:
+	Validaciones normales.
+	Evaluaciones plural diferente.
+	Uso groupBy en vista alumnos->notas para mostrar columnas y filas.
+	Creo ruta para ver notas de cada alumno.
+----------
+- agitame:
+	Carrito y linea genericos sin modelos ni tablas.
+	Validacion con restriccion unique en departamentos store
+	y en update con Rule ->ignore.
+	Indice en migracion facturas.
+	Tabla pivote articulo_factura (lineas) con pivote cantidad, la cantidad por defecto es 1.
+	Imprime el carrito en el index de articulos.
+	En web.php estan todas las rutas para el carrito.
+----------
+- biblioteca:
+	View de ejemplares pasando relaciones (carga ansiosa)
+	En destroy de libros, elimina el libro eliminando relaciones con ejemplares
+	y eliminando los ejemplares.
+	Prestamos es tabla pivote con dos columnas pivote y una nullable.
+	En show de ejemplares muestro lo siguiente:
+		- Si el ejemplar tiene algun prestamo sin devolver.
+		- Si tiene algun prestamos sin devolver compruebo si lleva mas de 30 dias prestado.
+	En el show de libros muestro los ejemplares y muestro lo siguiente:
+		- Si el ejemplar tiene algun prestamo sin fecha_hora_devolucion.
+		- Si el ejemplar tiene algún prestamo muestro la fecha_hora del último prestamo.
+----------
+- biblioteca_sin_pivote:
+	Hago lo mismo pero prestamos en lugar de ser tabla pivote, es un modelo.
+----------
+- billetes:
+	En reservas index, solo muestro las reservas del usuario autorizado.
+	En vuelos store, validación con expresiones regulares y unique,
+	en update Rule unique.
+	Al elminar los vuelos elimino todos los asientos de este vuelo antes.
+	Relacion 1 a 1 entre asiento y reserva (hasOne).
+	En modelo Vuelo, genero tantos asientos como plazas totales tenga este,
+	compruebo si tiene plazas libres, y compruebo cuentas plazas libres tiene,
+	comprobando si algun asiento de ese vuelo tiene alguna relacion con Reserva.
+	
+	Tabla de vuelos con filtrado, ordenación y paginado LIVEWIRE
+	Politica que muestra el boton de reserva solo si el vuelo tiene plazas libres.
+	En vista vuelos->reserva solo muestro en la lista desplegable los asientos que
+	tienen reserva.
+	En web.php, ruta para hacer una reserva de un vuelo.
+----------
+-caja_amiga:
+	Caja amiga pero sin modelo Linea, sin Livewire, con objetos genericos
+	Carrito y Linea y todas las rutas en web.php
+	Componente para cada producto.
+----------
+-cine:
+	Si la pelicula tiene alguna proyección con entradas, no puede eliminarla.
+	En el show de pelicula, muestro todas las entradas que hay para esa pelicula
+	en todas las proyecciones.
+----------
+-colegio:
+	En alumnos->criterios accedo a la columna pivote de la tabla pivote.
+	En alumnos->index calculo la nota final del alumno.
+	En web.php creo la ruta para acceder a los criterios de un alumno.
+----------
+-colegio_sin_pivote:
+	Lo mismo pero la tabla notas es un modelo.
+----------
+-examen (Cuentas, movimientos):
+	En cuentas->index, columna con el total de saldo de la cuenta.
+	En cuentas->show, muestro todos los movimientos de la cuenta,
+	junto con el saldo parcial.
+----------
+-examenbiblioteca:
+	Lo mismo que biblioteca pero hecho por Ricardo.
+	Migración para añadir la columna devolucion a prestamos.
+	Ruta en web.php para el show de ejemplares, donde se pasa
+	prestado si no tiene prestamos vigentes y la diferencia en dias.
+----------
+-fechas:
+	StoreEventoRequest para validacion del evento, con validaciones de fechas.
+	Tabla para eventos con ordenación, filtrado de fechas con LIVEWIRE.
+	En el modelo evento, compruebo el estado del evento (proximo, pasado, en curso).
+	EN ESTE PROYECTO TENGO EL EMAIL.
+----------
+-filmaffinity:
+	Polimorfica, una ficha puede ser de un videojuego o de una pelicula
+	1 a 1 (Una pelicula pertenece a una ficha y una ficha a una pelicula)
+	Tengo comentarios por si necesito ver algo.
+----------
+-notas:
+	Crear notas con LIVEWIRE. La lista desplegable con el numero de trimestre varía,
+	segun la asignatura seleccionada de la lista desplegable de asignaturas.
+	Además tengo una tabla con un filtrado donde se puede buscar al alumno al que se le
+	quiere asociar la nota.
+	
+	Para notas finales muestro segun la asignatura seleccionada en la lista desplegable,
+	el nombre del alumno, las notas de cada trimestre y la nota final.
+	Para preguntar la nota del trimestre y la nota final de una asignatura, se lo pregunto
+	al modelo Alumno.
+	
+	En asignaturas->create tengo una lista desplegable que recuerda lo seleccionado si se
+	actualiza igual que en edit.
+----------
+-ordenadores:
+	Tiene Store y UpdateOrdenadorRequest
+	Dos foreignId en la misma tabal que apuntan a la misma tabla (aula).
+	Tengo un componente LIVEWIRE que me muestra una tabla con los cambios que ha
+	tenido un ordenador y tiene un botón para eliminar el historial de cambios.
+	En el edit de ordenadores, tengo una lista desplegable con todas las aulas,
+	y me selecciona el aula actual del ordenador.
+	Calculo el número de dispositivos que tiene un ordenador desde su modelo.
+	
+	AL CREAR EN EL WEB.PHP UNA RUTA PARA UN MODELO CON EL PLURAR MAL AÑADO:
+	PARAMETERS
+	
+	Route::resource('ordenadores', OrdenadorController::class)->parameters([
+    		'ordenadores' => 'ordenador',
+	])->middleware('can:soloAdmin');
+----------
+-palas:
+	POLIMORFICAS: comentario a un post o a otro comentario SIN LIVEWIRE.
+	RESERVAS: cuadrícula para reservar CON LIVEWIRE.
+	CAJA AMIGA: caja amiga con modelo Linea CON LIVEWIRE (el generico carrito no hace nada).
+----------
+-spotify:
+	En album, artista: tengo para añadir imagenes.
+	En el modelo album, calculo la duración total de sus canciones.
+	TENGO SOFTDELETE EN ALBUMES.
+	AL CREAR EN EL WEB.PHP UNA RUTA PARA UN MODELO CON EL PLURAR MAL AÑADO:
+	PARAMETERS
+----------
+-videoclub:
+	POLIMORFICA un ejemplar puede ser de una pelicula o de un videojuego.
+	Validación con FormRequest desde LIVEWIRE.
+	Index de pelicula, prestamo y videojuego CON LIVEWIRE.
+	En el modelo Ejemplar compruebo si esta prestado.
+----------
+-videojuegos:
+	Videojuego index, con listas desplegables que dependen una de la otra.
+	Videojuego show al hacer click en el titulo del juego en el index.
+	ORDENACIÓN CON JOIN ENTRE TABLAS.
+	Videojuego poseo, lista desplegable con todos los juegos,
+	y dos botones para hacer attach o dettach entre el usuario y el videojuego.
+	
+----------
+MIRACLE
+----------
+-aeropuerto:
+	Validaciones de fechas en el controlador de Vuelo.
+	Formateo de fecha en modelo Vuelo.
+	Politica diferente en VueloPolicy.
+	En web.php crea rutas para reservas pero en realidad es una tabla pivote.
+	
+
+	
+	
+	
+
+	
+	
+
+
