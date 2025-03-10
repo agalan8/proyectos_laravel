@@ -1,4 +1,23 @@
 --------------------------------------------------------------------------------------
+POLIMORFICAS
+--------------------------------------------------------------------------------------
+
+- 1 A 1 / 1 A MUCHOS
+
+$post = Post::find(1);
+$comment = new Comment(['content' => 'Buen artículo']);
+$comment->commentable()->associate($post);
+$comment->save();
+
+- MUCHOS A MUCHOS
+
+$post = Post::find(1);
+$tag = Tag::find(2);
+
+$post->tags()->attach($tag);
+
+
+--------------------------------------------------------------------------------------
 REGISTRAR Y LOGIN CON DNI
 --------------------------------------------------------------------------------------
 Modificar archivos:
@@ -41,7 +60,7 @@ public function definition(): array
             'precio' => fake()->randomFloat(2, 50, 1000),
         ];
     }
-    
+
 -- POLIMORFICA --
 
 public function definition(): array
@@ -66,7 +85,7 @@ public function run(): void
     {
         Ordenador::factory(10)->create();
     }
-    
+
 -- DatabaseSeeder.php
 
 public function run(): void
@@ -78,7 +97,7 @@ public function run(): void
         ]);
 
     }
- 
+
 php artisan db:seed
 
 --------------------------------------------------------------------------------------
@@ -270,7 +289,7 @@ test('Eliminar un ordenador', function(){
     $response->assertRedirect('/ordenadores');
 });
 
---------------------------------------------------------------------------------------	
+--------------------------------------------------------------------------------------
 LIVEWIRE
 --------------------------------------------------------------------------------------
 
@@ -289,7 +308,7 @@ crear carpeta en storage/app/public
 php artisan storage:link
 
 
---------------------------------------------------------------------------------------	
+--------------------------------------------------------------------------------------
 EMAIL
 --------------------------------------------------------------------------------------
 
@@ -315,11 +334,11 @@ app->mail
             text: 'emails.ejemploText'
         );
     }
-    
+
     views->carpeta emails->plantilla blade
-    
+
     web.php
-    
+
     Route::get('/correo', function(){
     Mail::to('alejandro@inbox.mailtrap.io')->send(new enviarCorreo);
     return redirect()->route('eventos.index');
@@ -349,7 +368,7 @@ Para que una columna dependa de otra tabla o este relacionado:
 // Clave ajena
 $table -> foreignId('departamento_id') -> constrained();
 
-con "constrained()" establecemos la relacion entre el campo 'departamento_id' de la tabla 
+con "constrained()" establecemos la relacion entre el campo 'departamento_id' de la tabla
 departamentos y la tabla empleados.
 
 Al poner departamendo_id Laravel ya sabe que ese valor pertenece a la tabla departamentos.
@@ -434,27 +453,27 @@ foreach ($notasPorCcee as $cceeId => $notas) {
 Validaciión de fechas:
 
 'fecha_hora' => [
-		'required', 
+		'required',
 		'date_format:Y-m-d H:i:s',
 		'after_or_equal:2024-12-07 00:00:00',
 		'before_or_equal:2024-12-31 23:59:59',
 		],
-	
+
 ---------------------------------------------------------------------
 
-INSERT INTO usuarios (nombre, fecha_creacion) 
+INSERT INTO usuarios (nombre, fecha_creacion)
 VALUES ('Juan', NOW());
 
 -- Insertar un evento con la fecha actual más 7 días
-INSERT INTO eventos (nombre, fecha_evento) 
+INSERT INTO eventos (nombre, fecha_evento)
 VALUES ('Reunión de equipo', NOW() + INTERVAL '7 days');
 
 -- Insertar un evento con la fecha actual más 3 meses
-INSERT INTO eventos (nombre, fecha_evento) 
+INSERT INTO eventos (nombre, fecha_evento)
 VALUES ('Lanzamiento de producto', NOW() + INTERVAL '3 months');
 
 -- Insertar un evento con la fecha actual más 2 años
-INSERT INTO eventos (nombre, fecha_evento) 
+INSERT INTO eventos (nombre, fecha_evento)
 VALUES ('Aniversario de la empresa', NOW() + INTERVAL '2 years');
 
 --------------------------------------------------------------------
@@ -576,21 +595,3 @@ Obtener Todos los Modelos Asociados a una Etiqueta
 
 $tag = Tag::where('name', 'Laravel')->first();
 $relatedItems = $tag->taggables; // Obtiene todos los posts y videos con esa etiqueta
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

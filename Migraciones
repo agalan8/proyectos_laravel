@@ -1,0 +1,42 @@
+ELIMINAR COLUMNA DE UNA MIGRACION YA EXISTENTE
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('email'); // Eliminar la columna email
+        });
+    }
+
+    public function down(): void {
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('email')->unique(); // Restaurar la columna email si se revierte la migración
+        });
+    }
+};
+
+
+CAMBIAR UNA COLUMNA POR OTRA
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('email'); // Eliminar la columna email
+            $table->string('dni', 20)->unique(); // Agregar la columna dni
+        });
+    }
+
+    public function down(): void {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('dni'); // Eliminar la columna dni
+            $table->string('email')->unique(); // Restaurar la columna email
+        });
+    }
+};

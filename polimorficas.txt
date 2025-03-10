@@ -1,0 +1,109 @@
+----------------RELACIÓN 1 A 1------------------------------------
+Ej: un foro puede pertenecer a una pelicula o a un videojuego. Una pelicula o videojuego solo tienen un foro.
+
+La unica tabla (foros) que contiene la CLAVE AJENA lleva el morphs('nosekeable'):
+    Schema::create('foros', function (Blueprint $table) {
+        $table->id();
+        $table->morphs('forable');
+    });
+
+Las dos tablas son los NOSEKEABLES (forables) y no hay que indicar NADA:
+    Schema::create('peliculas', function (Blueprint $table) {
+        $table->id();
+        $table->string('titulo');
+    });
+
+    Schema::create('videojuegos', function (Blueprint $table) {
+        $table->id();
+        $table->string('titulo');
+    });
+
+El unico modelo (Foro) que contiene la CLAVE AJENA tiene la funcion nosekeable() con el morphTo():
+    public function forable() {
+        return $this->morphTo(); // Dentro del morphTo() no va nada
+    }
+
+Los dos modelos (Pelicula y Videojuego) que son NOSEKEABLES (forables) tienen la funcion foro() con el morphOne():
+    public function foro() {
+        return $this->morphOne(Foro::class, 'forable');  HAY QUE INDICAR 'nosekeable'
+    }
+
+La asociación la comienza el unico modelo que tiene la CLAVE AJENA:
+    $foro = new Foro();
+    $foro->forable()->associate($videojuego);  // $videojuego debe estar ya almacenado en la base de datos para que tenga id
+    $foro->save();
+
+
+----------------RELACIÓN 1 A MUCHOS------------------------------------
+Ej: una valoracion puede pertenecer a una pelicula o a un videojuego. Una pelicula o videojuego pueden tener muchas valoraciones.
+
+La unica tabla (valoraciones) que contiene la CLAVE AJENA lleva el morphs('nosekeable'):
+    Schema::create('valoraciones', function (Blueprint $table) {
+        $table->id();
+        $table->morphs('valorable');
+    });
+
+Las dos tablas son los NOSEKEABLES (valorables) y no hay que indicar NADA:
+    Schema::create('peliculas', function (Blueprint $table) {
+        $table->id();
+        $table->string('titulo');
+    });
+
+    Schema::create('videojuegos', function (Blueprint $table) {
+        $table->id();
+        $table->string('titulo');
+    });
+
+El unico modelo (Valoracion) que contiene la CLAVE AJENA tiene la funcion nosekeable() con el morphTo():
+    public function valorable() {
+        return $this->morphTo();  // Dentro del morphTo() no va nada
+    }
+
+Los dos modelos (Pelicula y Videojuego) que son NOSEKEABLES (valorables) tienen la funcion valoraciones() con el morphMany():
+    public function valoraciones() {
+        return $this->morphMany(Valoracion::class, 'valorable'); HAY QUE INDICAR 'nosekeable'
+    }
+
+La asociación la comienza el unico modelo que tiene la CLAVE AJENA:
+    $valoracion = new Valoracion($validated);
+    $valoracion->valorable()->associate($pelicula);
+    $valoracion->save();
+
+CONCLUSIÓN: El associate() se comienza desde el modelo que tiene la clave ajena. En las relaciones NO polimorficas también.
+Hay que hacer un save() ya que el modelo tiene que almacenar la clave ajena.
+
+---------------RELACIÓN MUCHOS A MUCHOS-----------------------------------------
+Ej: un género puede pertenecer a muchas películas o a muchos videojuegos. Tanto las peliculas como los videojuegos pueden tener muchos géneros.
+
+Creamos la tabla única: generos (no hay que indicar nada especial)
+Creamos las dos tablas nosekeables: peliculas y videojuegos (no hay que indicar nada especial)
+
+Hay que crear una tabla PIVOTE llamada nosekeables: php artisan make:migration create_generoables_table
+
+En esa tabla hay que incluir la CLAVE AJENA de la TABLA UNICA (genero_id) y el morphs('nosekeable):
+    Schema::create('generoables', function (Blueprint $table) {
+        $table->foreignId('genero_id')->constrained();
+        $table->morphs('generoable');
+        $table->primary(['genero_id', 'generoable_type', 'generoable_id']); // Esto puede ser util, ya que no hay clave primaria simple.
+    });
+
+El modelo ÚNICO (Genero) tiene 2 funciones:
+    public function videojuegos(){
+        return $this->morphedByMany(Videojuego::class, 'generoable');
+    }
+
+    public function peliculas(){
+        return $this->morphedByMany(Pelicula::class, 'generoable');
+    }
+
+Los dos modelos (Pelicula y Videojuego) que son NOSEKEABLES (generoables) tienen la funcion generos() con el mortphToMany():
+    public function generos(){
+        return $this->morphToMany(Genero::class, 'generoable');
+    }
+
+En este caso es AL REVÉS, el ATTACH comienza desde el nosekeable (pelicula o videojuego):
+    $pelicula->generos()->attach($validated['genero_id']);
+    $videojuego->generos()->attach($genero_id);
+
+CONCLUSIÓN: el attach se realiza desde uno de los dos modelos nosekeables. No hay que hacer luego un save, ya que en estos modelos no se guarda la clave ajena.
+En las relaciones NO polimorficas da igual desde que modelo se empiece.
